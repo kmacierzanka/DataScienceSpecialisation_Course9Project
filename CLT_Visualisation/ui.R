@@ -27,7 +27,7 @@ shinyUI(fluidPage(
             checkboxInput("check_binom", "Binomial"),
             conditionalPanel(
                 condition = "input.check_binom == true",
-                h4("Samples from Binomial Distribution"),
+                h4("Samples from Binomial Distribution (Blue)"),
                 sliderInput("slider_binom_sam", "How many samples? The mean of
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
@@ -37,7 +37,7 @@ shinyUI(fluidPage(
             checkboxInput("check_pois", "Poisson"),
             conditionalPanel(
                 condition = "input.check_pois == true",
-                h4("Samples from Poisson Distribution"),
+                h4("Samples from Poisson Distribution (Yellow)"),
                 sliderInput("slider_pois_sam", "How many samples? The mean of
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
@@ -47,7 +47,7 @@ shinyUI(fluidPage(
             checkboxInput("check_exp", "Exponential"),
             conditionalPanel(
                 condition = "input.check_exp == true",
-                h4("Samples from Exponential Distribution"),
+                h4("Samples from Exponential Distribution (Green)"),
                 sliderInput("slider_exp_sam", "How many samples? The mean of
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
