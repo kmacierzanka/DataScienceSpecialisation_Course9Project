@@ -12,6 +12,9 @@ shinyServer(function(input, output) {
             }
             binom <- geom_histogram(data = binom_means, mapping = aes(x = scale(V2), y = ..density..),
                                     binwidth = 0.25, fill = "blue", colour = "darkblue", alpha = 0.1, lwd = 1)
+            output$binom_mean <- renderText({
+                signif(mean(scale(binom_means$V2)), 4)
+            })
         }
         
         if (input$check_pois) {
@@ -22,6 +25,9 @@ shinyServer(function(input, output) {
             }
             pois <- geom_histogram(data = pois_means, mapping = aes(x = scale(V2), y = ..density..),
                                     binwidth = 0.25, fill = "yellow", colour = "orange", alpha = 0.1, lwd = 1)
+            output$pois_mean <- renderText({
+                signif(mean(scale(pois_means$V2)), 4)
+            })
         }
         
         if (input$check_exp) {
@@ -32,6 +38,9 @@ shinyServer(function(input, output) {
             }
             expon <- geom_histogram(data = exp_means, mapping = aes(x = scale(V2), y = ..density..),
                                    binwidth = 0.25, fill = "green", colour = "darkgreen", alpha = 0.1, lwd = 1)
+            output$exp_mean <- renderText({
+                signif(mean(scale(exp_means$V2)), 4)
+            })
         }
         
         ggplot(data = data.frame(x = c(-5, 5)), aes(x = x)) +

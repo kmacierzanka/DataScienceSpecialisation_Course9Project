@@ -14,7 +14,9 @@ shinyUI(fluidPage(
     These are then standardised before being plotted.
     You will see that as both the number of samples and the number of observations
     per sample increases, the distribution of the means of these samples tends
-    towards a normal distribution."),
+    towards a normal distribution. Since they are standardised, their standard
+    deviation = 1 and their mean is around 0 (but not exactly). The exact mean
+    is calculated in the side panel."),
     br(), br(),
     ("You can display multiple distributions at a time. The normal distribution
     density plot is fixed and serves as a reference. It has a mean of 0 and standard
@@ -32,7 +34,9 @@ shinyUI(fluidPage(
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
                 sliderInput("slider_binom_obs", "How many observations per sample?",
-                            min = 1, max = 100, value = 2)),
+                            min = 1, max = 100, value = 2),
+                h5("Mean of all samples:"),
+                textOutput("binom_mean")),
             
             checkboxInput("check_pois", "Poisson"),
             conditionalPanel(
@@ -42,7 +46,9 @@ shinyUI(fluidPage(
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
                 sliderInput("slider_pois_obs", "How many observations per sample?",
-                            min = 1, max = 100, value = 2)),
+                            min = 1, max = 100, value = 2),
+                h5("Mean of all samples:"),
+                textOutput("pois_mean")),
             
             checkboxInput("check_exp", "Exponential"),
             conditionalPanel(
@@ -52,7 +58,9 @@ shinyUI(fluidPage(
                             each of these will be taken and then plotted",
                             min = 1, max = 10000, value = 5),
                 sliderInput("slider_exp_obs", "How many observations per sample?",
-                            min = 1, max = 100, value = 2)),
+                            min = 1, max = 100, value = 2),
+                h5("Mean of all samples:"),
+                textOutput("exp_mean")),
         ),
         mainPanel(
             plotOutput("plot")
