@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[3.4.1];shiny[1.4.0.2];ionrangeslider[2.1.6];strftime[0.9.2];bootstrap[3.4.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="shared/strftime/strftime-min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>  <title>Visualising CLT</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <h2>Visualising CLT</h2>
+    <h3>Documentation:</h3>
+    This app is aimed at helping to visualise Central Limit Theorem (CLT). From
+    Wikipedia we can read that 'when independent random variables are added, their
+    properly normalized sum tends toward a normal distribution (informally a bell
+    curve) even if the original variables themselves are not normally distributed'.
+    <br/>
+    <br/>
+    In the side bar, you can decide from what type of distribution (binomial,
+    Poisson and/or exponential) you would like to sample, how many samples you
+    would like to have, and how many observations you would like in each sample.
+    These are then standardised before being plotted.
+    You will see that as both the number of samples and the number of observations
+    per sample increases, the distribution of the means of these samples tends
+    towards a normal distribution.
+    <br/>
+    <br/>
+    You can display multiple distributions at a time. The normal distribution
+    density plot is fixed and serves as a reference. It has a mean of 0 and standard
+    deviation of 1.
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <h3>Pick and Choose</h3>
+          <h4>Samples from Binomial Distribution</h4>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="check_binom" type="checkbox"/>
+                <span>Binomial</span>
+              </label>
+            </div>
+          </div>
+          <div data-display-if="input.check_binom == true" data-ns-prefix="">
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_binom_sam">How many samples? The mean of
+                            each of these will be taken and then plotted</label>
+              <input class="js-range-slider" id="slider_binom_sam" data-min="1" data-max="10000" data-from="5" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_binom_obs">How many observations per sample?</label>
+              <input class="js-range-slider" id="slider_binom_obs" data-min="1" data-max="100" data-from="2" data-step="1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="check_pois" type="checkbox"/>
+                <span>Poisson</span>
+              </label>
+            </div>
+          </div>
+          <div data-display-if="input.check_pois == true" data-ns-prefix="">
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_pois_sam">How many samples? The mean of
+                            each of these will be taken and then plotted</label>
+              <input class="js-range-slider" id="slider_pois_sam" data-min="1" data-max="10000" data-from="5" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_pois_obs">How many observations per sample?</label>
+              <input class="js-range-slider" id="slider_pois_obs" data-min="1" data-max="100" data-from="2" data-step="1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="check_exp" type="checkbox"/>
+                <span>Exponential</span>
+              </label>
+            </div>
+          </div>
+          <div data-display-if="input.check_exp == true" data-ns-prefix="">
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_exp_sam">How many samples? The mean of
+                            each of these will be taken and then plotted</label>
+              <input class="js-range-slider" id="slider_exp_sam" data-min="1" data-max="10000" data-from="5" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="slider_exp_obs">How many observations per sample?</label>
+              <input class="js-range-slider" id="slider_exp_obs" data-min="1" data-max="100" data-from="2" data-step="1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
