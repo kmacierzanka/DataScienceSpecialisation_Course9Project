@@ -4,7 +4,96 @@ date: "27th June 2020"
 output: ioslides_presentation
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+***
+
+The Central Limit Theorem (CLT) states that the distributions of averages of independent and identically distributed (iid) random variables become increasingly like normal distributions, with increasing numbers of iid averages.
+
+It can be a rather counterintuitive/paradoxical phenomenon and so my app aims to help visualise it. It is common knowledge that seeing things makes them easier to grasp.
+
+The app can be accessed [here](https://kmacierzanka.shinyapps.io/CLT_Visualisation/?_ga=2.56793834.1371673961.1593229039-1643379641.1593229039). I hope you enjoy it!
+
+On the following two slides are example outputs from my app, which show distributions of non-normal iid random variable (from the exponential distribution) approaching the normal distribution with increasing numbers of samples and random variables per sample.
+
+The code for the two plots is given on the final slide.
+
+## Few samples (10) with few random variables (10) per sample
+
+```{r few, fig.height=4, fig.width=7, fig.align='center', fig.cap="The standard normal distribution is in red", message=FALSE, echo=FALSE}
+exp_means <- as.data.frame(matrix(nrow = 10, ncol = 2))
+set.seed(2634)
+for (i in 1:10) {
+        exp_means[i, 2] <- mean(rexp(10, 5))
+}
+library(ggplot2)
+expon <- geom_histogram(data = exp_means, mapping = aes(x = scale(V2), y = ..density..),
+                        binwidth = 0.25, fill = "green",
+                        colour = "darkgreen", alpha = 0.1, lwd = 1)
+
+ggplot(data = data.frame(x = c(-5, 5)), aes(x = x)) +
+        theme_minimal() + labs(x = "x", y = "Proportion") +
+        stat_function(fun = dnorm, geom = "line",
+                      args = list(mean = 0, sd = 1),
+                      lwd = 2, colour = "tomato") +
+        expon
 ```
 
+## More samples (1000) with more random variables (100) per sample
+
+```{r more, fig.height=4, fig.width=7, fig.align='center', fig.cap="The standard normal distribution is in red", message=FALSE, echo=FALSE}
+exp_means <- as.data.frame(matrix(nrow = 1000, ncol = 2))
+set.seed(2634)
+for (i in 1:1000) {
+        exp_means[i, 2] <- mean(rexp(100, 5))
+}
+library(ggplot2)
+expon <- geom_histogram(data = exp_means, mapping = aes(x = scale(V2), y = ..density..),
+                        binwidth = 0.25, fill = "green",
+                        colour = "darkgreen", alpha = 0.1, lwd = 1)
+
+ggplot(data = data.frame(x = c(-5, 5)), aes(x = x)) +
+        theme_minimal() + labs(x = "x", y = "Proportion") +
+        stat_function(fun = dnorm, geom = "line",
+                      args = list(mean = 0, sd = 1),
+                      lwd = 2, colour = "tomato") +
+        expon
+```
+
+## Code
+
+```{r few_code, fig.height=4, fig.width=7, fig.align='center', fig.cap="The standard normal distribution is in red", message=FALSE, eval=FALSE}
+exp_means <- as.data.frame(matrix(nrow = 10, ncol = 2))
+set.seed(2634)
+for (i in 1:10) {
+        exp_means[i, 2] <- mean(rexp(10, 5))
+}
+library(ggplot2)
+expon <- geom_histogram(data = exp_means, mapping = aes(x = scale(V2), y = ..density..),
+                        binwidth = 0.25, fill = "green",
+                        colour = "darkgreen", alpha = 0.1, lwd = 1)
+
+ggplot(data = data.frame(x = c(-5, 5)), aes(x = x)) +
+        theme_minimal() + labs(x = "x", y = "Proportion") +
+        stat_function(fun = dnorm, geom = "line",
+                      args = list(mean = 0, sd = 1),
+                      lwd = 2, colour = "tomato") +
+        expon
+```
+
+```{r more_code, fig.height=4, fig.width=7, fig.align='center', fig.cap="The standard normal distribution is in red", message=FALSE, eval=FALSE}
+exp_means <- as.data.frame(matrix(nrow = 1000, ncol = 2))
+set.seed(2634)
+for (i in 1:1000) {
+        exp_means[i, 2] <- mean(rexp(100, 5))
+}
+library(ggplot2)
+expon <- geom_histogram(data = exp_means, mapping = aes(x = scale(V2), y = ..density..),
+                        binwidth = 0.25, fill = "green",
+                        colour = "darkgreen", alpha = 0.1, lwd = 1)
+
+ggplot(data = data.frame(x = c(-5, 5)), aes(x = x)) +
+        theme_minimal() + labs(x = "x", y = "Proportion") +
+        stat_function(fun = dnorm, geom = "line",
+                      args = list(mean = 0, sd = 1),
+                      lwd = 2, colour = "tomato") +
+        expon
+```
